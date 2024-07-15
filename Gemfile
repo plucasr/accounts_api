@@ -17,6 +17,7 @@ gem "kamal", require: false
 
 gem "thruster", require: false
 
+gem "jwt"
 
 
 group :development, :test do
