@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
-
+  before_action :set_user, only: %i[ destroy ]
   # GET /users
   def index
     user_service = Container.resolve(:user_service)
@@ -15,26 +14,37 @@ class UsersController < ApplicationController
 
   # GET /users/1
   def show
-    render json: @user
-  end
+    user_service = Container.resolve(:user_service)
+    @user = user_service.find_user(params[:id])
 
-  # POST /users
-  def create
-    @user = User.new(user_params)
-
-    if @user.save
-      render json: @user, status: :created, location: @user
+    if @user
+      render json: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: { error: "User not found" }, status: :not_found
     end
   end
 
-  # PATCH/PUT /users/1
-  def update
-    if @user.update(user_params)
-      render json: @user
+
+  # POST /users
+  def create
+    user_service = Container.resolve(:user_service)
+    result = user_service.set_user(user_params)
+
+    if result.is_a?(User)
+      render json: result, status: :created, location: result
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render json: result, status: :unprocessable_entity # Render errors
+    end
+  end
+
+  def update
+    user_service = Container.resolve(:user_service)
+    result = user_service.set_user(user_params.merge(id: params[:id]))
+
+    if result.is_a?(User)
+      render json: result
+    else
+      render json: result, status: :unprocessable_entity
     end
   end
 
@@ -49,8 +59,7 @@ class UsersController < ApplicationController
       @user = User.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def user_params
-      params.expect(user: [ :email, :password, :first_name, :last_name ])
+      params.require(:user).permit(:email, :password, :first_name, :last_name)
     end
 end
