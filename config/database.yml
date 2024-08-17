@@ -3,9 +3,9 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   host: <%= ENV.fetch("DATABASE_HOST") { "localhost" } %>
-  username: <%= ENV.fetch("DATABASE_USER") { Rails.application.credentials.dig(:database, :username) } %>
-  password: <%= ENV.fetch("DATABASE_PASSWORD") { Rails.application.credentials.dig(:database, :password) } }
-  database: <%= ENV.fetch("DATABASE_NAME") { Rails.application.credentials.dig(:database, :db_name) } %>
+  username: <%= ENV.fetch("DATABASE_USER", Rails.application.credentials.dig(:database, :username)) %>
+  password: <%= ENV.fetch("DATABASE_PASSWORD", Rails.application.credentials.dig(:database, :password)) }
+  database: <%= ENV.fetch("DATABASE_NAME", Rails.application.credentials.dig(:database, :db_name)) %>
 
 development:
   <<: *default
