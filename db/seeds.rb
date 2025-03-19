@@ -1,8 +1,5 @@
 require 'faker'
 
-
-
-
 5.times do
   user = User.create!(
     email: Faker::Internet.unique.email,
