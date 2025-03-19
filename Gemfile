@@ -20,6 +20,10 @@ gem "thruster", require: false
 gem "jwt"
 gem "bcrypt", "~> 3.1.7"
 
+gem "grpc"
+gem "grpc-tools"
+gem "protobuf"
+
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "faker"
