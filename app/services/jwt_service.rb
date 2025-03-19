@@ -12,7 +12,7 @@ class JwtService
       decoded = JWT.decode(token, SECRET_KEY)[0]
       HashWithIndifferentAccess.new decoded
     rescue JWT::ExpiredSignature, JWT::VerificationError, JWT::DecodeError => e
-      nil # Or handle the error as needed
+      nil
     end
   end
 end

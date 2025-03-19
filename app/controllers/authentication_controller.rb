@@ -12,7 +12,7 @@ class AuthenticationController < ApplicationController
   end
 
   def validate_token
-    token = request.headers["Authorization"]&.split(" ")&.last # Extract token from Authorization header
+    token = request.headers["Authorization"]&.split(" ")&.last
 
     if token
       decoded_token = JwtService.decode(token)
