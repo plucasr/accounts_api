@@ -18,7 +18,7 @@ gem "kamal", require: false
 gem "thruster", require: false
 
 gem "jwt"
-
+gem "bcrypt", "~> 3.1.7"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
