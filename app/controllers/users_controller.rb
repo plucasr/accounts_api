@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: %i[ destroy ]
+  before_action :authenticate_request
   # GET /users
   def index
     user_service = Container.resolve(:user_service)
