@@ -23,15 +23,18 @@ class UserService
     user = @user_repository.find_by(id: input[:id])
 
     if user
-
-      if user.update(input)
+      # Update existing user
+      if user.update(input.except(:id).except(:password)) # Remove password and id from the input, to avoid errors.
+        if input[:password].present?
+          user.update(password: input[:password])
+        end
         user
       else
         user.errors
       end
     else
-
-      new_user = @user_repository.new(input)
+      # Create a new user
+      new_user = @user_repository.new(input.except(:id))
       if new_user.save
         new_user
       else
