@@ -3,8 +3,13 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.all
-
+    user_service = Container.resolve(:user_service)
+    @users = user_service.list_users(
+      filter: params[:filter],
+      sort: params[:sort],
+      page: params[:page],
+      per_page: params[:per_page]
+    )
     render json: @users
   end
 
