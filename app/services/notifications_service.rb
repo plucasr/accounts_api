@@ -1,13 +1,24 @@
+# app/services/notifications_service.rb
 require "grpc"
 require_relative "../lib/notifications_pb"
 require_relative "../lib/notifications_services_pb"
 
-class NotificationServer < Notifications::NotificationService::Service
-  def send_notification(notification_req, _unused_call)
-    # Implement your logic here
-    puts "Sending notification to user #{notification_req.userId}: #{notification_req.message}"
+class NotificationsService
+  def self.send_notification(user_id, message, message_type)
+    server_address = ENV["GRPC_SERVER_ADDRESS"]
+    stub = Notifications::NotificationService::Stub.new(
+      server_address,
+      :this_channel_is_insecure
+    )
 
-    # Return an empty response as defined in the proto file
-    Google::Protobuf::Empty.new
+    # Create a request object
+    request = Notifications::NotificationRequest.new(
+      userId: user_id,
+      message: message,
+      messageType: message_type
+    )
+
+    # Send the request to the gRPC server
+    stub.send_notification(request)
   end
 end
