@@ -9,6 +9,8 @@ Rails.application.routes.draw do
 
   post "login", to: "authentication#login"
   get "validate_token", to: "authentication#validate_token"
+  post "/send_notification", to: "notifications#send_notification"
+
   # Defines the root path route ("/")
   # root "posts#index"
 end
