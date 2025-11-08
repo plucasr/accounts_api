@@ -1,3 +1,5 @@
+![banner](docs/banner.svg)
+
 # RESTful API for User and Contact Management
 
 This is a RESTful API built with Ruby on Rails, designed for managing user and contact information. It utilizes a PostgreSQL database and adheres to RESTful principles for seamless interaction with client applications.
@@ -101,3 +103,5 @@ This is a RESTful API built with Ruby on Rails, designed for managing user and c
 ## License
 
 - Specify the license under which the project is distributed.
+
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
